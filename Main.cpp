@@ -112,6 +112,51 @@ static void TestCase4()
         cout << "Someone tell the coder that something went wrong :/";
 }
 
+//Testing the transpose method
+static void TestCase5()
+{
+    //2 matixes, 1 to tranpose to
+    Matrix fish(2, 3);
+    Matrix chip(3, 2);
+
+    //Popuate fish with numbers from 1 - 6
+    int count = 1;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            fish.setElement(i, j, count);
+            count++;
+        }
+    }
+    cout << "Fish matrix created!\n" << fish.toString();
+    cout << "Transpose attempt\n";
+
+    chip = ~fish;
+    cout << "Chip transpose:\n" << chip.toString();
+}
+
+//Testing the copying
+static void TestCase6()
+{
+    Matrix loaf(3, 3);
+    //Populate it
+    int count = 1;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            loaf.setElement(i, j, count);
+            count++;
+        }
+    }
+    cout << "Got matrix:\n" << loaf.toString();
+    cout << "Copying to matrix baguette\n";
+
+    Matrix baguette = loaf;
+    cout << "Baguette:\n" << baguette.toString();
+
+}
 
 int main()
 {
@@ -130,7 +175,13 @@ int main()
     cout << "Trying the get element and set element methods in a matrix(3, 3)\n";
     TestCase3();
 
-    cout << "Trying the + operator\n";
+    cout << "Trying the +, -, *, == operator\n";
     TestCase4();
+
+    cout << "Trying to transpose a matrix\n";
+    TestCase5();
+
+    cout << "Trying to copy a matrix\n";
+    TestCase6();
     return 0;
 }
