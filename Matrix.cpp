@@ -1,5 +1,7 @@
 #include "Matrix.h"
 #include <iostream>
+#include <string>
+
 using namespace Numbers;
 
 Matrix::Matrix(unsigned int m, unsigned int n)
@@ -16,24 +18,15 @@ Matrix::Matrix(unsigned int m, unsigned int n)
         layer[i] = new int[columns];
         for(int j = 0; j < columns; j++)
         {
-            int value = i + j;
+            int value = 0;
             layer[i][j] = value;
-        }
-    }
-
-    for(int i = 0; i < rows; i++)
-    {
-        for(int j = 0; j < columns; j++)
-        {
-            int value;
-            value = layer[i][j];
-            cout << value;
         }
     }
 }
 
 void Matrix::destroyMatrix()
 {
+    cout << "MATRIX ANNHILATIONS\n";
     for(int i = 0; i < rows; i++)
     {
         delete[] layer[i];
@@ -41,12 +34,12 @@ void Matrix::destroyMatrix()
     delete[] layer;
 }
 
-unsigned int Matrix::rows() const
+unsigned int Matrix::getRows() const
 {
     return rows;
 }
 
-unsigned int Matrix::columns() const
+unsigned int Matrix::getColumns() const
 {
     return columns;
 }
@@ -63,3 +56,101 @@ void Matrix::printMatrix()
         }
     }
 }
+
+int Matrix::getElement(unsigned i, unsigned j)
+{
+    int x = i, y = j; 
+    int output = 0;
+    output = layer[x][y];
+    return output;
+}
+
+void Matrix::setElement(unsigned i, unsigned j, int value)
+{
+    layer[i][j] = value;
+    cout << "Value changed to " << value << endl;
+}
+
+std::string Matrix::toString()
+{
+    std::string output;
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            output += std::to_string(layer[i][j]);
+
+            if (j < columns - 1)
+                output += ", ";
+        }
+        output += "\n";
+    }
+
+    return output;
+}
+
+
+//All the operator overloading will be here
+Matrix Matrix::operator+(const Matrix& mat)
+{
+    Matrix result(rows, columns);
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            result.layer[i][j] = this->layer[i][j] + mat.layer[i][j];
+        }
+    }
+
+    return result;
+}
+
+Matrix Matrix::operator-(const Matrix& mat)
+{
+
+    Matrix result(rows, columns);
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            result.layer[i][j] = this->layer[i][j] - mat.layer[i][j];
+        }
+    }
+
+    return result;
+}
+
+Matrix Matrix::operator*(const Matrix& mat)
+{
+
+    Matrix result(rows, columns);
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            result.layer[i][j] = this->layer[i][j] * mat.layer[i][j];
+        }
+    }
+
+    return result;
+}
+
+bool Matrix::operator==(const Matrix& mat)
+{
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            if (this->layer[i][j] != mat.layer[i][j])
+                return false;
+        }
+    }
+
+    return true;
+}/*
+*/
